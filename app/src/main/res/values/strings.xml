@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">InnQuest</string>
+    <string name="hotelListLayoutHeading">Search Results</string>
+    <string name="welcomeMessage">Welcome to the Hotel Reservation System</string>string>
+    <string name="checkInDateLabel">Check In Date</string>string>
+    <string name="checkOutDateLabel">Check Out Date</string>string>
+    <string name="nameLabel">Name of Primary Guest</string>string>
+    <string name="numberOfRoomsLabel">Number of Rooms</string>string>
+    <string name="totalNumberOfGuestsLabel">Total number of Guests</string>string>
+    <string name ="searchButton">Search Hotels</string>
+
+</resources>
