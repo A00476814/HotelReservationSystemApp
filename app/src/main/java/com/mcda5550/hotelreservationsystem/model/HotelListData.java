@@ -4,17 +4,24 @@ import com.google.gson.annotations.SerializedName;
 
 public class HotelListData {
 
+    @SerializedName("id")
+    private Long id;
+
     @SerializedName("name")
     private String name;
+
     private String location;
     private int numberOfRooms;
     private double rating;
 
     @SerializedName("price")
     private double price;
+
     private String availability;
 
-    public HotelListData(String name, String location, int numberOfRooms, double rating, double price, String availability) {
+    // Constructor including id
+    public HotelListData(Long id, String name, String location, int numberOfRooms, double rating, double price, String availability) {
+        this.id = id;
         this.name = name;
         this.location = location;
         this.numberOfRooms = numberOfRooms;
@@ -24,6 +31,13 @@ public class HotelListData {
     }
 
     // Getters and setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

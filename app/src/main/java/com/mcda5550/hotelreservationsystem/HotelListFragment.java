@@ -9,16 +9,23 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mcda5550.hotelreservationsystem.api.HotelApiService;
 import com.mcda5550.hotelreservationsystem.api.RetrofitClient;
 import com.mcda5550.hotelreservationsystem.model.HotelListData;
+
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import android.widget.Button;
+import android.widget.Toast;
 
 public class HotelListFragment extends Fragment implements HotelListAdapter.OnItemClickListener{
 
@@ -26,6 +33,13 @@ public class HotelListFragment extends Fragment implements HotelListAdapter.OnIt
     TextView descriptionTextView;
     ProgressBar progressBar;
     RecyclerView recyclerView;
+
+    Button nextButton;
+    String nameOfGuest,checkInDate,checkOutDate, numberOfRoomsStr, totalNumberOfGuestsStr;
+
+
+
+    private HotelListData selectedHotel; // Store the selected hotel
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,6 +50,7 @@ public class HotelListFragment extends Fragment implements HotelListAdapter.OnIt
         progressBar = view.findViewById(R.id.progress_bar);
         recyclerView = view.findViewById(R.id.hotelsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        nextButton = view.findViewById(R.id.nextButton); // Assume button is part of your layout
         return view;
     }
 
@@ -44,11 +59,13 @@ public class HotelListFragment extends Fragment implements HotelListAdapter.OnIt
         super.onViewCreated(view, savedInstanceState);
 
         // Retrieving arguments passed from the previous fragment
-        String nameOfGuest = getArguments().getString("name of guest");
-        String checkInDate = getArguments().getString("check in date");
-        String checkOutDate = getArguments().getString("check out date");
-        int numberOfRooms = Integer.parseInt(getArguments().getString("number of rooms"));
-        int numberOfGuests = Integer.parseInt(getArguments().getString("number of guests"));
+         nameOfGuest = getArguments().getString("name of guest");
+         checkInDate = getArguments().getString("check in date");
+         checkOutDate = getArguments().getString("check out date");
+        numberOfRoomsStr = getArguments().getString("number of rooms");
+        totalNumberOfGuestsStr = getArguments().getString("number of guests");
+        int numberOfRooms = Integer.parseInt(numberOfRoomsStr);
+        int numberOfGuests = Integer.parseInt(totalNumberOfGuestsStr);
 
         // Setting the description text
         descriptionTextView.setText(String.format("Welcome %s, displaying hotels where %d rooms are available for %d guests staying between dates %s to %s", nameOfGuest, numberOfRooms, numberOfGuests, checkInDate, checkOutDate));
@@ -56,6 +73,8 @@ public class HotelListFragment extends Fragment implements HotelListAdapter.OnIt
 
         // Fetch hotels from the API
         fetchHotels(checkInDate, checkOutDate, numberOfRooms);
+        nextButton.setOnClickListener(v -> goToNextFragment());
+
     }
 
     private void fetchHotels(String checkInDate, String checkOutDate, int numberOfRooms) {
@@ -89,8 +108,35 @@ public class HotelListFragment extends Fragment implements HotelListAdapter.OnIt
 
     @Override
     public void onItemClick(HotelListData item) {
+        this.selectedHotel = item; // Save the selected item
+
+    }
+
+    private void goToNextFragment() {
+        if (selectedHotel == null) {
+            Toast.makeText(getContext(), "Please select a hotel first", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Bundle bundle = new Bundle();
-        bundle.putString("name", item.getName());
-        bundle.putDouble("price", item.getPrice());
+        bundle.putString("nameOfGuest", getArguments().getString("name of guest"));
+        bundle.putString("checkInDate", getArguments().getString("check in date"));
+        bundle.putString("checkOutDate", getArguments().getString("check out date"));
+        bundle.putString("numberOfRooms", getArguments().getString("number of rooms"));
+        bundle.putString("totalNumberOfGuests", getArguments().getString("number of guests"));
+        bundle.putLong("selectedHotelId", selectedHotel.getId()); // Assuming getId() returns a long.
+
+
+/*        FragmentTransaction ft = getParentFragmentManager().beginTransaction();
+        HotelDetailFragment detailFragment = new HotelDetailFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("name", selectedHotel.getName());
+        bundle.putDouble("price", selectedHotel.getPrice());
+        detailFragment.setArguments(bundle);
+
+        ft.replace(R.id.fragment_container, detailFragment);
+        ft.addToBackStack(null);
+        ft.commit();*/
     }
 }
