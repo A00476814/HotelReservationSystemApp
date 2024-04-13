@@ -30,7 +30,6 @@ InnQuest incorporates the following validations:
 - **Platform**: Android
 - **Programming Language**: Java
 - **Primary Components**: Fragments, RecyclerView for listing hotels, DatePicker for selecting dates, ScrollView for list, Contraint View for layout adjustments.
+- **Databse**: The Application uses MSSQL Databse to store the hotels and reservation informations.
 
-## Future Enhancements
 
-- **Booking Functionality**: Implementing a complete booking process, including reservation confirmation and payment processing.
