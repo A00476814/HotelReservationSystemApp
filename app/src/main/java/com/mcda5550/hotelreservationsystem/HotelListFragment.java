@@ -20,7 +20,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HotelListFragment extends Fragment {
+public class HotelListFragment extends Fragment implements HotelListAdapter.OnItemClickListener{
 
     TextView titleTextView;
     TextView descriptionTextView;
@@ -83,7 +83,14 @@ public class HotelListFragment extends Fragment {
     }
 
     private void setupRecyclerView(List<HotelListData> hotels) {
-        HotelListAdapter adapter = new HotelListAdapter(getActivity(), hotels);
+        HotelListAdapter adapter = new HotelListAdapter(getActivity(), hotels, this);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onItemClick(HotelListData item) {
+        Bundle bundle = new Bundle();
+        bundle.putString("name", item.getName());
+        bundle.putDouble("price", item.getPrice());
     }
 }
