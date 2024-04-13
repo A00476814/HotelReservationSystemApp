@@ -39,7 +39,7 @@ public class HotelListFragment extends Fragment implements HotelListAdapter.OnIt
 
 
 
-    private HotelListData selectedHotel; // Store the selected hotel
+    private HotelListData selectedHotel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class HotelListFragment extends Fragment implements HotelListAdapter.OnIt
         progressBar = view.findViewById(R.id.progress_bar);
         recyclerView = view.findViewById(R.id.hotelsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        nextButton = view.findViewById(R.id.nextButton); // Assume button is part of your layout
+        nextButton = view.findViewById(R.id.nextButton);
         return view;
     }
 
@@ -108,7 +108,7 @@ public class HotelListFragment extends Fragment implements HotelListAdapter.OnIt
 
     @Override
     public void onItemClick(HotelListData item) {
-        this.selectedHotel = item; // Save the selected item
+        this.selectedHotel = item;
 
     }
 
@@ -124,19 +124,17 @@ public class HotelListFragment extends Fragment implements HotelListAdapter.OnIt
         bundle.putString("checkOutDate", getArguments().getString("check out date"));
         bundle.putString("numberOfRooms", getArguments().getString("number of rooms"));
         bundle.putString("totalNumberOfGuests", getArguments().getString("number of guests"));
-        bundle.putLong("selectedHotelId", selectedHotel.getId()); // Assuming getId() returns a long.
+        bundle.putLong("selectedHotelId", selectedHotel.getId());
+        bundle.putString("selectedHotelName", selectedHotel.getName());
 
 
-/*        FragmentTransaction ft = getParentFragmentManager().beginTransaction();
-        HotelDetailFragment detailFragment = new HotelDetailFragment();
+        FragmentTransaction ft = getParentFragmentManager().beginTransaction();
+        BookingDetailsFragment bookingDetailsFragment = new BookingDetailsFragment();
 
-        Bundle bundle = new Bundle();
-        bundle.putString("name", selectedHotel.getName());
-        bundle.putDouble("price", selectedHotel.getPrice());
-        detailFragment.setArguments(bundle);
+        bookingDetailsFragment.setArguments(bundle);
 
-        ft.replace(R.id.fragment_container, detailFragment);
+        ft.replace(R.id.main_layout, bookingDetailsFragment);
         ft.addToBackStack(null);
-        ft.commit();*/
+        ft.commit();
     }
 }
