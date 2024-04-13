@@ -1,16 +1,21 @@
 package com.mcda5550.hotelreservationsystem.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class HotelListData {
 
-    private String hotelName;
+    @SerializedName("name")
+    private String name;
     private String location;
     private int numberOfRooms;
     private double rating;
-    private String price;
+
+    @SerializedName("price")
+    private double price;
     private String availability;
 
-    public HotelListData(String hotelName, String location, int numberOfRooms, double rating, String price, String availability) {
-        this.hotelName = hotelName;
+    public HotelListData(String name, String location, int numberOfRooms, double rating, double price, String availability) {
+        this.name = name;
         this.location = location;
         this.numberOfRooms = numberOfRooms;
         this.rating = rating;
@@ -20,12 +25,12 @@ public class HotelListData {
 
     // Getters and setters
 
-    public String getHotelName() {
-        return hotelName;
+    public String getName() {
+        return name;
     }
 
-    public void setHotelName(String hotelName) {
-        this.hotelName = hotelName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getLocation() {
@@ -52,11 +57,11 @@ public class HotelListData {
         this.rating = rating;
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

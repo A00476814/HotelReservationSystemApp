@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mcda5550.hotelreservationsystem.model.HotelListData;
 
 import java.util.List;
+import java.util.Locale;
 
 public class HotelListAdapter extends RecyclerView.Adapter<HotelListAdapter.ViewHolder> {
     private List<HotelListData> hotelListData;
@@ -30,37 +31,31 @@ public class HotelListAdapter extends RecyclerView.Adapter<HotelListAdapter.View
 
 
     @Override
-    public void onBindViewHolder(@NonNull HotelListAdapter.ViewHolder holder, int position) {
-        String hotelName = hotelListData.get(position).getHotel_name();
-        String hotelPrice = hotelListData.get(position).getPrice();
-        String hotelAvailability = hotelListData.get(position).getAvailability();
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        HotelListData hotel = hotelListData.get(position);
+        holder.hotelName.setText(hotel.getName());
 
-        // set up the text
-        holder.hotelName.setText(hotelName);
-        holder.hotelAvailability.setText(hotelAvailability);
-        holder.hotelPrice.setText(hotelPrice);
+        // Format the double price value as a string with two decimal places
+        String formattedPrice = String.format(Locale.getDefault(), "$%.2f", hotel.getPrice());
+        holder.hotelPrice.setText(formattedPrice);
+
+        holder.hotelLocation.setText(hotel.getLocation());
+        holder.hotelRating.setText(String.format(Locale.getDefault(), "%.1f", hotel.getRating()));
     }
-
     @Override
     public int getItemCount() {
-        if (hotelListData != null) {
-            return hotelListData.size();
-        } else {
-            return 0;
-        }
+        return hotelListData != null ? hotelListData.size() : 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        TextView hotelName, hotelPrice, hotelAvailability;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView hotelName, hotelPrice, hotelLocation, hotelRating;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             hotelName = itemView.findViewById(R.id.hotelNameTextView);
             hotelPrice = itemView.findViewById(R.id.hotelPriceTextView);
-            hotelAvailability = itemView.findViewById(R.id.availabilityTextView);
-
-
+            hotelLocation = itemView.findViewById(R.id.locationTextView); // Add this ID to your layout
+            hotelRating = itemView.findViewById(R.id.ratingTextView); // Add this ID to your layout
         }
     }
 
