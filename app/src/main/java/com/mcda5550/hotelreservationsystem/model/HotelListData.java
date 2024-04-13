@@ -2,22 +2,54 @@ package com.mcda5550.hotelreservationsystem.model;
 
 public class HotelListData {
 
-    String hotel_name;
-    String price;
-    String availability;
+    private String hotelName;
+    private String location;
+    private int numberOfRooms;
+    private double rating;
+    private String price;
+    private String availability;
 
-    public HotelListData(String hotel_name, String price, String availability) {
-        this.hotel_name = hotel_name;
+    public HotelListData(String hotelName, String location, int numberOfRooms, double rating, String price, String availability) {
+        this.hotelName = hotelName;
+        this.location = location;
+        this.numberOfRooms = numberOfRooms;
+        this.rating = rating;
         this.price = price;
         this.availability = availability;
     }
 
-    public String getHotel_name() {
-        return hotel_name;
+    // Getters and setters
+
+    public String getHotelName() {
+        return hotelName;
     }
 
-    public void setHotel_name(String hotel_name) {
-        this.hotel_name = hotel_name;
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public int getNumberOfRooms() {
+        return numberOfRooms;
+    }
+
+    public void setNumberOfRooms(int numberOfRooms) {
+        this.numberOfRooms = numberOfRooms;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 
     public String getPrice() {
